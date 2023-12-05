@@ -2,4 +2,5 @@
     <string name="app_name">WebToonProject</string>
     <string name="backToHistory">마지막 시점 돌아가기</string>
     <string name="changeTabName">탭 이름 바꾸기</string>
+    <string name="NoTabName">알 수 없음</string>
 </resources>
