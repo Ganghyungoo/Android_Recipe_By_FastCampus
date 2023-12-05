@@ -12,7 +12,7 @@ import androidx.core.content.edit
 import com.test.webtoonproject.databinding.FragmentWebViewBinding
 import java.text.FieldPosition
 
-class WebViewFragment(val position: Int) : Fragment() {
+class WebViewFragment(val position: Int, val defaultUrl:String) : Fragment() {
     lateinit var fragmentWebViewBinding: FragmentWebViewBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +29,7 @@ class WebViewFragment(val position: Int) : Fragment() {
                     }
                 }
                 settings.javaScriptEnabled = true
-                loadUrl("https://comic.naver.com/")
+                loadUrl(defaultUrl)
             }
 
             buttonBackToLast.setOnClickListener {
@@ -45,8 +45,6 @@ class WebViewFragment(val position: Int) : Fragment() {
 
             }
         }
-
-
         return fragmentWebViewBinding.root
     }
 
@@ -57,5 +55,4 @@ class WebViewFragment(val position: Int) : Fragment() {
     fun goBack(){
         fragmentWebViewBinding.webView.goBack()
     }
-
 }

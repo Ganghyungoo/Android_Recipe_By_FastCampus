@@ -12,16 +12,16 @@ class ViewPagerAdapter(val mainActivity: MainActivity): FragmentStateAdapter(mai
     override fun createFragment(position: Int): Fragment {
         return when(position){
             0->{
-                 WebViewFragment(position)
+                 WebViewFragment(position,"https://comic.naver.com/webtoon?tab=mon")
             }
             1->{
-                 WebViewFragment(position)
+                 WebViewFragment(position,"https://comic.naver.com/webtoon?tab=tue")
             }
             2->{
-                 WebViewFragment(position)
+                 WebViewFragment(position,"https://comic.naver.com/webtoon?tab=wed")
             }
             else->{
-                 WebViewFragment(position)
+                 WebViewFragment(position,"https://comic.naver.com/webtoon?tab=mon")
             }
         }
     }
