@@ -32,8 +32,6 @@ class MainActivity : AppCompatActivity() {
             action = MEDIA_PLAYER_PLAY
         }
         startService(intent)
-
-
     }
     fun mediaPlayerStop(){
         val intent = Intent(this@MainActivity,MediaPlayerService::class.java).apply {
