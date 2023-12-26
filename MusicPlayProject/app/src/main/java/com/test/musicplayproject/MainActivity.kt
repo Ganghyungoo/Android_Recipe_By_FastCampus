@@ -1,14 +1,12 @@
 package com.test.musicplayproject
 
 import android.content.Intent
-import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.test.musicplayproject.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var actiivityMainBinding: ActivityMainBinding
-    var mediaPlayer:MediaPlayer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         actiivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
