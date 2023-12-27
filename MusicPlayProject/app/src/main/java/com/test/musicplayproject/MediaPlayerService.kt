@@ -121,15 +121,15 @@ class MediaPlayerService : Service() {
                 stopSelf()
             }
         }
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
     override fun onDestroy() {
-        mediaPlayer?.apply {
+/*        mediaPlayer?.apply {
             stop()
             release()
         }
-        mediaPlayer = null
+        mediaPlayer = null*/
         super.onDestroy()
     }
 }

@@ -43,9 +43,8 @@ class MainActivity : AppCompatActivity() {
         }
         startService(intent)
     }
-
     override fun onDestroy() {
-        stopService(Intent(this,MediaPlayerService::class.java))
+//        stopService(Intent(this,MediaPlayerService::class.java))
         super.onDestroy()
     }
 }
