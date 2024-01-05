@@ -40,7 +40,6 @@ class WaveFormView @JvmOverloads constructor(
         ampList.add(maxAmplitude)
         rectList.clear()
 
-
         val maxRect = this.width / rectWidth
 
         val amps = ampList.takeLast(maxRect.toInt())
@@ -75,7 +74,6 @@ class WaveFormView @JvmOverloads constructor(
         }
 
         tick++
-
         invalidate()
     }
 
