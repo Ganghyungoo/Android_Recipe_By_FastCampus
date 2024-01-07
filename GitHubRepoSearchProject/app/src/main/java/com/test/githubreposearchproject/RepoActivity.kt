@@ -1,9 +1,12 @@
 package com.test.githubreposearchproject
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.test.githubreposearchproject.adapter.RepoAdapter
 import com.test.githubreposearchproject.databinding.ActivityRepoBinding
@@ -18,7 +21,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RepoActivity : AppCompatActivity() {
     private lateinit var activityRepoBinding: ActivityRepoBinding
     private lateinit var repoAdapter: RepoAdapter
+    private var searchPage = 0
     private var repoName = ""
+    private var hasMore = true
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(" https://api.github.com/")
@@ -32,25 +37,51 @@ class RepoActivity : AppCompatActivity() {
 
         val userName = intent.getStringExtra("userName") ?: return
 
-        repoAdapter = RepoAdapter()
-        repoSearch(userName)
+        repoAdapter = RepoAdapter{
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.htmlUrl))
+            startActivity(intent)
+        }
+
+        //통신(검색) 메서드 실행
+        repoSearch(userName, searchPage)
 
         activityRepoBinding.userNameTextView.text = userName
 
+        //리사이클러뷰 설정
         activityRepoBinding.repoRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@RepoActivity)
+            val linearLayoutManager = LinearLayoutManager(this@RepoActivity)
+            layoutManager = linearLayoutManager
             adapter = repoAdapter
+
+            //마지막 아이템까지 스크롤 시 통신 page + 1
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val recyclerViewTotalCount = linearLayoutManager.itemCount
+                    val lastVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
+                    Log.d("scroll","""현재 검색된 아이템 수 :$recyclerViewTotalCount 
+                        |지금 스크롤해서 보이는 마지막 아이템 번쨰:$lastVisiblePosition""".trimMargin())
+
+                    if (lastVisiblePosition + 8 >= recyclerViewTotalCount - 1 && hasMore){
+                        searchPage++
+                        repoSearch(userName,searchPage)
+                    }
+
+                }
+            })
         }
     }
 
-    private fun repoSearch(userName: String) {
+    private fun repoSearch(userName: String, page:Int) {
 
         val githubService = retrofit.create(GithubService::class.java)
-        githubService.listRepos(userName).enqueue(object : Callback<List<Repo>> {
+        githubService.listRepos(userName, page/*,30*/).enqueue(object : Callback<List<Repo>> {
             override fun onResponse(call: Call<List<Repo>>, response: Response<List<Repo>>) {
                 Log.d("testt", "List Repo: ${response.body().toString()}")
 
-                repoAdapter.submitList(response.body())
+                hasMore = response.body()?.count() == 30
+                repoAdapter.submitList(repoAdapter.currentList + response.body().orEmpty())
             }
 
             override fun onFailure(call: Call<List<Repo>>, t: Throwable) {
