@@ -25,11 +25,6 @@ class RepoActivity : AppCompatActivity() {
     private var repoName = ""
     private var hasMore = true
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(" https://api.github.com/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityRepoBinding = ActivityRepoBinding.inflate(layoutInflater)
@@ -59,11 +54,11 @@ class RepoActivity : AppCompatActivity() {
                     super.onScrolled(recyclerView, dx, dy)
 
                     val recyclerViewTotalCount = linearLayoutManager.itemCount
-                    val lastVisiblePosition = linearLayoutManager.findFirstVisibleItemPosition()
+                    val lastVisiblePosition = linearLayoutManager.findLastVisibleItemPosition()
                     Log.d("scroll","""현재 검색된 아이템 수 :$recyclerViewTotalCount 
                         |지금 스크롤해서 보이는 마지막 아이템 번쨰:$lastVisiblePosition""".trimMargin())
 
-                    if (lastVisiblePosition + 8 >= recyclerViewTotalCount - 1 && hasMore){
+                    if (lastVisiblePosition >= recyclerViewTotalCount - 1 && hasMore){
                         searchPage++
                         repoSearch(userName,searchPage)
                     }
@@ -74,8 +69,7 @@ class RepoActivity : AppCompatActivity() {
     }
 
     private fun repoSearch(userName: String, page:Int) {
-
-        val githubService = retrofit.create(GithubService::class.java)
+        val githubService = APIClient.retrofit.create(GithubService::class.java)
         githubService.listRepos(userName, page/*,30*/).enqueue(object : Callback<List<Repo>> {
             override fun onResponse(call: Call<List<Repo>>, response: Response<List<Repo>>) {
                 Log.d("testt", "List Repo: ${response.body().toString()}")

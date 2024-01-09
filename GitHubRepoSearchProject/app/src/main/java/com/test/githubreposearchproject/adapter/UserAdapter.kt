@@ -30,7 +30,6 @@ class UserAdapter(val onClick :(User)-> Unit): ListAdapter<User, UserAdapter.Vie
             override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
 

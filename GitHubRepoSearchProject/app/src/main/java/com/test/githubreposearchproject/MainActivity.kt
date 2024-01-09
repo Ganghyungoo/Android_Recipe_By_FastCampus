@@ -26,10 +26,6 @@ class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private var searchText = StringBuffer()
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(" https://api.github.com/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun searchUser() {
-        val githubService = retrofit.create(GithubService::class.java)
+        val githubService = APIClient.retrofit.create(GithubService::class.java)
         githubService.searchUsers(searchText).enqueue(object : Callback<UserDto> {
             override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
                 Log.d("testt", "Search User: ${response.body().toString()}")
