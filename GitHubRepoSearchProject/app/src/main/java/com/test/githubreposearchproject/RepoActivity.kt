@@ -2,12 +2,11 @@ package com.test.githubreposearchproject
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.test.githubreposearchproject.adapter.RepoAdapter
 import com.test.githubreposearchproject.databinding.ActivityRepoBinding
 import com.test.githubreposearchproject.datamodel.Repo
@@ -15,8 +14,6 @@ import com.test.githubreposearchproject.network.GithubService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class RepoActivity : AppCompatActivity() {
     private lateinit var activityRepoBinding: ActivityRepoBinding

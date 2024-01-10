@@ -17,8 +17,6 @@ import kotlinx.coroutines.Runnable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding
@@ -32,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
+        //핸들러가 종속되어있는 메인 스레드가 실행할 작업(통신)
         val runnable = Runnable{
             searchUser()
         }
@@ -53,7 +52,9 @@ class MainActivity : AppCompatActivity() {
             //검색 EditText 설정
             searchEditText.addTextChangedListener {
                 searchText.replace(0,searchText.capacity(),it.toString())
+                //핸들러의 작럽 초기화
                 handler.removeCallbacks(runnable)
+                //핸들러 작업 지연 실행
                 handler.postDelayed(
                     runnable,
                     300
