@@ -24,6 +24,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ProgressBar
+            android:id="@+id/imageProgressbar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="@+id/newsImageView"
+            app:layout_constraintStart_toStartOf="@+id/newsImageView"
+            app:layout_constraintTop_toTopOf="@+id/newsImageView"
+            app:layout_constraintBottom_toBottomOf="@+id/newsImageView"/>
+
         <TextView
             android:id="@+id/newsTitle"
             android:layout_width="0dp"
