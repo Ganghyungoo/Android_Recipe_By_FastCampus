@@ -1,48 +1,38 @@
-package com.test.newsappproject
+package com.test.newsappproject.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.newsappproject.adapter.NewsAdapter
 import com.test.newsappproject.dataModel.NewsRss
 import com.test.newsappproject.dataModel.changeToModel
 import com.test.newsappproject.databinding.ActivityMainBinding
-import com.tickaroo.tikxml.TikXml
-import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
+import com.test.newsappproject.`object`.APIClient
 import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 //MBN뉴스 가져오기
 class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding
     private lateinit var newsAdater: NewsAdapter
 
-    //TODO 레트로핏 선언 (나중에 object형태로 따로 뺄 예정)
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://www.mbn.co.kr/")
-        //xml 형식 변환
-        .addConverterFactory(
-            TikXmlConverterFactory.create(
-                TikXml.Builder()
-                    .exceptionOnUnreadXml(false)
-                    .build()
-            )
-        ).build()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
-        //TODO 레트로핏 통신으로 메서드로 뺄예정
-        val newService = retrofit.create(NewService::class.java)
-
-        newsAdater = NewsAdapter()
+        //리사이클러 뷰 설정
+        newsAdater = NewsAdapter{
+            val intent = Intent(this,WebViewActivity::class.java)
+            intent.putExtra("url",it)
+            startActivity(intent)
+        }
         val linearLayoutManager = LinearLayoutManager(this)
 
         activityMainBinding.newsRecyclerView.apply {
@@ -51,9 +41,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        //chip 선택에 따른 레트로핏 통신 분기
         activityMainBinding.run{
             defaultChip.isChecked = true
-            newService.mainFeed().submitList()
+            APIClient.newService.mainFeed().submitList()
 
             defaultChip.setOnCloseIconClickListener {
                 if (chipGroup.checkedChipId == defaultChip.id){
@@ -61,51 +52,52 @@ class MainActivity : AppCompatActivity() {
                 }
                 chipGroup.clearCheck()
                 defaultChip.isChecked = true
-                newService.mainFeed().submitList()
+                APIClient.newService.mainFeed().submitList()
             }
             politicsChip.setOnClickListener {
                 chipGroup.clearCheck()
                 politicsChip.isChecked = true
-                newService.politicsNews().submitList()
+                APIClient.newService.politicsNews().submitList()
             }
             economyChip.setOnClickListener {
                 chipGroup.clearCheck()
                 economyChip.isChecked = true
-                newService.economyNews().submitList()
+                APIClient.newService.economyNews().submitList()
             }
             societyChip.setOnClickListener {
                 chipGroup.clearCheck()
                 societyChip.isChecked = true
-                newService.societyNews().submitList()
+                APIClient.newService.societyNews().submitList()
             }
             internationalChip.setOnClickListener {
                 chipGroup.clearCheck()
                 internationalChip.isChecked = true
-                newService.internationalNews().submitList()
+                APIClient.newService.internationalNews().submitList()
             }
             cultureChip.setOnClickListener {
                 chipGroup.clearCheck()
                 cultureChip.isChecked = true
-                newService.cultureNews().submitList()
+                APIClient.newService.cultureNews().submitList()
             }
             enterChip.setOnClickListener {
                 chipGroup.clearCheck()
                 enterChip.isChecked = true
-                newService.enterNews().submitList()
+                APIClient.newService.enterNews().submitList()
             }
             sportsChip.setOnClickListener {
                 chipGroup.clearCheck()
                 sportsChip.isChecked = true
-                newService.sportsNews().submitList()
+                APIClient.newService.sportsNews().submitList()
             }
             healthChip.setOnClickListener {
                 chipGroup.clearCheck()
                 healthChip.isChecked = true
-                newService.healthNews().submitList()
+                APIClient.newService.healthNews().submitList()
             }
         }
     }
 
+    //레트로핏 통신에 대한 확장함수 선언
    private fun Call<NewsRss>.submitList() {
        enqueue(object : Callback<NewsRss> {
            override fun onResponse(call: Call<NewsRss>, response: Response<NewsRss>) {
@@ -114,6 +106,9 @@ class MainActivity : AppCompatActivity() {
                //얻어온 기사 리스트에서 사진을 끌어오기 위해 해당 리스트 아이템의 링크에 접근해서 meta image를 추출하는 작업
                val list = response.body()?.channel?.items.orEmpty().changeToModel()
                newsAdater.submitList(list)
+
+               activityMainBinding.notFoundView.isVisible = list.isEmpty()
+
                list.forEachIndexed { idx, item ->
                    Thread{
                        try {
@@ -135,7 +130,6 @@ class MainActivity : AppCompatActivity() {
 
 
            }
-
            override fun onFailure(call: Call<NewsRss>, t: Throwable) {
                //오류가 날 경우
            }

@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.internal.MainDispatcherFactory
 import kotlinx.coroutines.launch
 
-class NewsAdapter : ListAdapter<NewsModel, NewsAdapter.ViewHolder>(diffUtil) {
+class NewsAdapter(private val onClick:(String)->Unit) : ListAdapter<NewsModel, NewsAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val itemNewsBinding: ItemNewsBinding) :
         RecyclerView.ViewHolder(itemNewsBinding.root) {
@@ -52,6 +52,9 @@ class NewsAdapter : ListAdapter<NewsModel, NewsAdapter.ViewHolder>(diffUtil) {
                 })
                 .into(itemNewsBinding.newsImageView)
 
+            itemNewsBinding.root.setOnClickListener {
+                onClick(item.link)
+            }
 
         }
 

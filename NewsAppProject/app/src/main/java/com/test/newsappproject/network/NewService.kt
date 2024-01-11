@@ -1,4 +1,4 @@
-package com.test.newsappproject
+package com.test.newsappproject.network
 
 import com.test.newsappproject.dataModel.NewsRss
 import retrofit2.Call
