@@ -45,7 +45,7 @@
         android:id="@+id/outlinedTextField2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="비밀번호"
+        android:hint="상태 메시지"
         app:boxStrokeColor="#002AFF"
         app:boxStrokeWidth="2dp"
         app:endIconMode="password_toggle"

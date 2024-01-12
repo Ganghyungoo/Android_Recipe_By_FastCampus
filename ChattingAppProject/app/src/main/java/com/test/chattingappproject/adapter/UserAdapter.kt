@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.chattingappproject.dataModel.UserModel
 import com.test.chattingappproject.databinding.ItemUserBinding
 
-class UserAdapter : ListAdapter<UserModel, UserAdapter.ViewHolder>(diffUtil) {
+class UserAdapter: ListAdapter<UserModel, UserAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val itemUserBinding: ItemUserBinding) :
         RecyclerView.ViewHolder(itemUserBinding.root) {

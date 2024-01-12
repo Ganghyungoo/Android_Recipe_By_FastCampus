@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.test.chattingappproject.Key.Companion.DB_USERS
 import com.test.chattingappproject.R
 import com.test.chattingappproject.databinding.ActivityLoginBinding
 import com.test.chattingappproject.ui.MainActivity
@@ -40,7 +42,14 @@ class LoginActivity : AppCompatActivity() {
             //그렇지 않을 경우(무결성 통과 상태)
             Firebase.auth.signInWithEmailAndPassword(loginIdText, loginPwText)
                 .addOnCompleteListener(this) {
-                    if (it.isSuccessful) {
+                    val myId = Firebase.auth.uid
+                    if (it.isSuccessful && !myId.isNullOrEmpty()) {
+                        val updateObj = mutableMapOf<String,Any>()
+                        updateObj["userId"] = myId
+                        updateObj["userName"] = loginIdText
+
+                        Firebase.database.reference.child(DB_USERS).child(myId).updateChildren(updateObj)
+
                         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     } else {
