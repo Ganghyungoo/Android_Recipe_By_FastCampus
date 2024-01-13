@@ -4,6 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.chat_room.ChatActivity">
+    tools:context=".ui.chatting.ChatActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chattingRecyclerView"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/sendLayout"/>
+
+    <LinearLayout
+        android:id="@+id/sendLayout"
+        android:background="#A1A1A1"
+        app:layout_constraintTop_toBottomOf="@+id/chattingRecyclerView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/messageTextView"
+            android:layout_width="0dp"
+            android:layout_weight="0.8"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            tools:text="as;dfkjas;dfl"/>
+
+        <Button
+            android:id="@+id/sendMessageButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="전송"
+            android:textColor="@color/black"
+            android:layout_weight="0.2"/>
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

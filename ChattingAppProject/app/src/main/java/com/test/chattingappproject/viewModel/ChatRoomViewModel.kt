@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.database.DatabaseReference
 import com.test.chattingappproject.dataModel.ChatRoomModel
 import com.test.chattingappproject.repository.ChatRoomInfo
 
@@ -13,6 +14,10 @@ class ChatRoomViewModel : ViewModel() {
     val chatRoomList: LiveData<List<ChatRoomModel>>
         get() = _chatRoomList
 
+    //내가 참여중인 채팅방 리스트2
+    private val _chatRoom = MutableLiveData<ChatRoomModel?>()
+    val chatRoom: LiveData<ChatRoomModel?>
+        get() = _chatRoom
 
     fun fetchMyChatRoom(myId: String) {
         ChatRoomInfo.getAllChatRoomInfo(myId,
@@ -31,6 +36,16 @@ class ChatRoomViewModel : ViewModel() {
             {
                 Log.e("getChatRoomList","${it.toException()}")
             })
+    }
+
+    fun fetchOneChatRoom(reference: DatabaseReference){
+        ChatRoomInfo.getChatRoomAsReference(reference){
+            if (it.value != null){
+                _chatRoom.value = it.getValue(ChatRoomModel::class.java)
+            }else{
+                _chatRoom.value = null
+            }
+        }
     }
 
 

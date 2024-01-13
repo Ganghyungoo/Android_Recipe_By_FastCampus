@@ -52,14 +52,12 @@ class MyPageFragment : Fragment() {
             //파이어베이스 내 정보 수정
             val user = mutableMapOf<String,Any>()
             user["userName"] = myName
-            user["descreption"] = myDescription
+            user["description"] = myDescription
             //수정 완료 시 토스트 메시지
             myDB.updateChildren(user).addOnCompleteListener{
                 Toast.makeText(this@MyPageFragment.context,"수정 완료",Toast.LENGTH_SHORT).show()
             }
         }
-
-
 
         fragmentMyPageBinding.logoutButton.setOnClickListener {
             Firebase.auth.signOut()

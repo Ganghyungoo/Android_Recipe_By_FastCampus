@@ -1,6 +1,7 @@
 package com.test.chattingappproject.adapter
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,13 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.chattingappproject.dataModel.UserModel
 import com.test.chattingappproject.databinding.ItemUserBinding
 
-class UserAdapter: ListAdapter<UserModel, UserAdapter.ViewHolder>(diffUtil) {
+class UserAdapter(private val onclick:(item:UserModel) -> Unit): ListAdapter<UserModel, UserAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val itemUserBinding: ItemUserBinding) :
         RecyclerView.ViewHolder(itemUserBinding.root) {
         fun biding(item: UserModel) {
             itemUserBinding.userNameTextView.text = item.userName
             itemUserBinding.descriptionTextView.text = item.description
+            itemUserBinding.root.setOnClickListener {
+                onclick(item)
+            }
         }
     }
 

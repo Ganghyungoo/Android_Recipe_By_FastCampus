@@ -1,5 +1,6 @@
 package com.test.chattingappproject.ui.home.chat_room
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.test.chattingappproject.dataModel.ChatRoomModel
 import com.test.chattingappproject.databinding.FragmentChatRoomListBinding
 import com.test.chattingappproject.databinding.ItemChatroomBinding
 import com.test.chattingappproject.ui.MainActivity
+import com.test.chattingappproject.ui.chatting.ChatActivity
 import com.test.chattingappproject.viewModel.ChatRoomViewModel
 
 class ChatRoomListFragment : Fragment() {
@@ -34,7 +36,13 @@ class ChatRoomListFragment : Fragment() {
             chatRoomAdapter.submitList(it)
         }
 
-        chatRoomAdapter = ChatRoomAdapter()
+        chatRoomAdapter = ChatRoomAdapter{
+            val intent = Intent(this@ChatRoomListFragment.context, ChatActivity::class.java)
+            intent.putExtra("otherUserId",it.otherUserId)
+            intent.putExtra("chatRoomId",it.chatRoomId)
+            startActivity(intent)
+
+        }
         val linearLayoutManager = LinearLayoutManager(this.context)
         fragmentChatroomBinding.chatRoomRecyclerView.run {
             adapter = chatRoomAdapter

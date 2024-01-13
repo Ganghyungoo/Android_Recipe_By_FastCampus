@@ -8,13 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.chattingappproject.dataModel.ChatRoomModel
 import com.test.chattingappproject.databinding.ItemChatroomBinding
 
-class ChatRoomAdapter : ListAdapter<ChatRoomModel, ChatRoomAdapter.ViewHolder>(diffUtil) {
+class ChatRoomAdapter(private val onClick:(item:ChatRoomModel)->Unit) : ListAdapter<ChatRoomModel, ChatRoomAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val itemChatroomBinding: ItemChatroomBinding) :
         RecyclerView.ViewHolder(itemChatroomBinding.root) {
         fun biding(item: ChatRoomModel) {
             itemChatroomBinding.nickNameTextView.text = item.otherUserName
             itemChatroomBinding.lastMessageTextView.text = item.lastMessage
+            itemChatroomBinding.root.setOnClickListener {
+                onClick(item)
+            }
         }
     }
 
