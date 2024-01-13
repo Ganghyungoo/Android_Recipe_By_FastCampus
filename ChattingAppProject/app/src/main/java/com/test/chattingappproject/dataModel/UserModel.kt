@@ -4,6 +4,6 @@ data class UserModel(
     val userId: String? = null,
     val userName: String? = null,
     val description: String? = null,
-
+    val fcmToken: String? = null
 
 )
