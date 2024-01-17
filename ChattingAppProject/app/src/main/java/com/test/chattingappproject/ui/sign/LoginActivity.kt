@@ -12,6 +12,7 @@ import com.google.firebase.messaging.ktx.messaging
 import com.test.chattingappproject.Key.Companion.DB_USERS
 import com.test.chattingappproject.R
 import com.test.chattingappproject.databinding.ActivityLoginBinding
+import com.test.chattingappproject.repository.UserInfo
 import com.test.chattingappproject.ui.MainActivity
 
 class LoginActivity : AppCompatActivity() {

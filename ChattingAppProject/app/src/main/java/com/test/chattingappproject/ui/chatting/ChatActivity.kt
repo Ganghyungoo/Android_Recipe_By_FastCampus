@@ -10,17 +10,11 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.test.chattingappproject.Key
-import com.test.chattingappproject.Key.Companion.FCM_SERVER_KEY
 import com.test.chattingappproject.adapter.ChattingAdapter
 import com.test.chattingappproject.dataModel.ChatModel
 import com.test.chattingappproject.databinding.ActivityChatBinding
 import com.test.chattingappproject.viewModel.ChatViewModel
 import com.test.chattingappproject.viewModel.MyInfoViewModel
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
 
 class ChatActivity : AppCompatActivity() {
     private lateinit var activityChatBinding: ActivityChatBinding

@@ -7,10 +7,14 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/locationTextView"
+        tools:text="인천광역시"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
         android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
