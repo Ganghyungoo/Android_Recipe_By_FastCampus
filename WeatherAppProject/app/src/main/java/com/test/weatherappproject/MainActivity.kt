@@ -3,6 +3,7 @@ package com.test.weatherappproject
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
 import com.test.weatherappproject.databinding.ActivityMainBinding
+import com.test.weatherappproject.databinding.ItemForecastBinding
 import com.test.weatherappproject.dataclass.BaseDateTime
 import com.test.weatherappproject.dataclass.Category
 import com.test.weatherappproject.dataclass.Forecast
@@ -25,6 +27,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             else -> {
                 Toast.makeText(this, "위치 권한이 필요합니다", Toast.LENGTH_SHORT).show()
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package",packageName,null)
+                    data = Uri.fromParts("package", packageName, null)
                 }
                 startActivity(intent)
                 finish()
@@ -57,9 +60,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
 
         locationPermissionRequest.launch(arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION))
-
-
-
 
 
     }
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateLocation(){
+    private fun updateLocation() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -95,6 +95,26 @@ class MainActivity : AppCompatActivity() {
         }
 
         fusedLocationClient.lastLocation.addOnSuccessListener {
+
+            //내가 있는 현재 위치의 동네이름을 알아내기위한 작업
+
+            Thread {
+                try {
+                    val addressList = Geocoder(this, Locale.KOREA).getFromLocation(
+                        it.latitude,
+                        it.longitude,
+                        1
+                    )
+                    runOnUiThread {
+                        Log.d("testt", addressList?.get(0)?.thoroughfare.orEmpty())
+                        activityMainBinding.locationTextView.text = addressList?.get(0)?.thoroughfare.orEmpty()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }.start()
+
+
             Log.d("myLocation", "위도: ${it.latitude} 경도: ${it.longitude}")
             //오늘의 날짜와 시간을 데이터 포펫에 맞게 얻어서 통신하기 위한 작업
             val baseDateTime = BaseDateTime()
@@ -111,7 +131,10 @@ class MainActivity : AppCompatActivity() {
                 nx = point.nx,
                 ny = point.ny
             ).enqueue(object : Callback<ResponseData> {
-                override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
+                override fun onResponse(
+                    call: Call<ResponseData>,
+                    response: Response<ResponseData>,
+                ) {
                     val forecastDateTimeMap = mutableMapOf<String, Forecast>()
                     response.body()?.response?.body?.items?.item?.forEach {
                         if (forecastDateTimeMap["${it.fcstDate}/${it.fcstTime}"] == null) {
@@ -140,6 +163,34 @@ class MainActivity : AppCompatActivity() {
                                 else -> {}
                             }
                         }
+                    }
+
+                    //정리한 데이터에서 가장 최근(현재)날씨를 가져오고 날짜별로 정리한 리스트로 변환
+                    val list = forecastDateTimeMap.values.toMutableList()
+                    list.sortWith { f1, f2 ->
+                        val f1DateTime = "${f1.forecastDate}${f1.forecastTime}"
+                        val f2DateTime = "${f2.forecastDate}${f2.forecastTime}"
+
+                        return@sortWith f1DateTime.compareTo(f2DateTime)
+                    }
+                    //ui설정
+                    val currentForecast = list.first()
+                    activityMainBinding.temperatureTexView.text =
+                        getString(R.string.temperature_text, currentForecast.temperature)
+                    activityMainBinding.skyTextView.text = currentForecast.weather
+                    activityMainBinding.precipitationTextView.text =
+                        getString(R.string.precipitation_text, currentForecast.precipitation)
+
+                    list.forEachIndexed { index, forecast ->
+                        if (index == 0) return@forEachIndexed
+
+                        val itemView = ItemForecastBinding.inflate(layoutInflater)
+                        itemView.timeTextView.text = forecast.forecastTime
+                        itemView.weatherTextView.text = forecast.weather
+                        itemView.temperatureTexView.text =
+                            getString(R.string.temperature_text, forecast.temperature)
+
+                        activityMainBinding.childForecastLayout.addView(itemView.root)
                     }
                     Log.d("netWorkFunction", "${forecastDateTimeMap}")
                 }

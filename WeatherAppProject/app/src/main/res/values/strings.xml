@@ -1,4 +1,6 @@
 <resources>
-    <string name="app_name">WeatherAppProject</string>
+    <string name="app_name">날씨앱</string>
     <string name="weather_service_key">hojdaAj28uKSvkkT5O01VLlmsMbVDxwWfk5norTQMAdtVK6+18evQogPO5ix63vdVPoPG6hGVUGv2iZ3nKzJvA==</string>
+    <string name="temperature_text">%.1f°</string>
+    <string name="precipitation_text">감수확률: %d %%°</string>
 </resources>
