@@ -3,12 +3,17 @@ package com.test.yamimapappproject
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.geometry.Tm128
 import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
 import com.test.yamimapappproject.databinding.ActivityMainBinding
 import com.test.yamimapappproject.dataclass.SearchResult
 import com.test.yamimapappproject.`object`.SearchRepository
@@ -29,18 +34,51 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         activityMainBinding.mapView.getMapAsync(this)
 
-        SearchRepository.getYamiRestaurantRetrofitService("석남동").enqueue(object: Callback<SearchResult>{
-            override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
+        activityMainBinding.searchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return if (query?.isNotEmpty() == true){
+                    SearchRepository.getYamiRestaurantRetrofitService(query).enqueue(object: Callback<SearchResult>{
+                        override fun onResponse(call: Call<SearchResult>, response: Response<SearchResult>) {
+                            val searchItemList = response.body()?.items.orEmpty()
+                            if (searchItemList.isEmpty()){
+                                Toast.makeText(this@MainActivity,"검색 결과가 존재하지 않습니다",Toast.LENGTH_SHORT).show()
+                                return
+                            }
+                            else if (!isNaverMapInit){
+                                Toast.makeText(this@MainActivity,"오류가 발생 중입니다",Toast.LENGTH_SHORT).show()
+                                return
+                            }
+                           val markers = searchItemList.map {
+                                Marker().apply {
+                                    val xy = LatLng(it.mapy.toDouble()/10000000,it.mapx.toDouble()/10000000)
+                                    position = xy
+                                    captionText = it.title
+                                    map = naverMap
+                                    Log.d("markerTest","${position}")
+                                }
+                            }
+                            val cameraUpdate = CameraUpdate.scrollTo(markers.first().position)
+                                .animate(CameraAnimation.Easing)
+                            naverMap.moveCamera(cameraUpdate)
+                        }
 
+                        override fun onFailure(call: Call<SearchResult>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
 
-                Log.d("textt","${response.body()}")
+                    })
+                    false
+                }else{
+                    true
+                }
             }
-
-            override fun onFailure(call: Call<SearchResult>, t: Throwable) {
-                TODO("Not yet implemented")
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
             }
 
         })
+
+
 
         if (isNaverMapInit){
 
