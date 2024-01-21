@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,10 +11,12 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.kakao.sdk.user.model.AccessTokenInfo
 import com.kakao.sdk.user.model.User
 import com.test.zenlyappproject.databinding.ActivityLoginBinding
 
@@ -28,6 +29,18 @@ class LoginActivity : AppCompatActivity() {
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
 
+        if (AuthApiClient.instance.hasToken()) {
+            UserApiClient.instance.accessTokenInfo{ accessTokenInfo: AccessTokenInfo?, throwable: Throwable? ->
+                if (throwable == null){
+                    if (Firebase.auth.currentUser == null){
+                        //카카오톡에서 정보를 끌고 와서 파이어베이스 로그인
+                        getKakaoAccountInfo()
+                    }else{
+                        navigateToMapActivity()
+                    }
+                }
+            }
+        }
 
         emailLoginResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if (it.resultCode == RESULT_OK){
@@ -134,8 +147,6 @@ class LoginActivity : AppCompatActivity() {
                 Firebase.auth.signInWithEmailAndPassword(kakaoEmail,uid).addOnCompleteListener {result->
                     if (result.isSuccessful){
                         updateFirebaseDatabase(user)
-                    }else{
-                        showErrorToast()
                     }
                 }.addOnFailureListener {error->
                     error.printStackTrace()
