@@ -1,23 +1,34 @@
 package com.test.tomorrowhouseappproject.ui.article
 
+import android.content.res.Resources.Theme
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem.OnMenuItemClickListener
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.test.tomorrowhouseappproject.R
 import com.test.tomorrowhouseappproject.databinding.FragmentWriteArticleBinding
 import com.test.tomorrowhouseappproject.dataclass.ArticleModel
+import java.lang.Exception
 import java.util.UUID
+
 
 class WriteArticleFragment : Fragment() {
     private lateinit var fragmentWriteArticleBinding: FragmentWriteArticleBinding
@@ -183,4 +194,5 @@ class WriteArticleFragment : Fragment() {
                 Snackbar.make(fragmentWriteArticleBinding.root,"글 업로드 실패!",Snackbar.LENGTH_SHORT).show()
             }
     }
+
 }
