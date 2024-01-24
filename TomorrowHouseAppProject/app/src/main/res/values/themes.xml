@@ -17,7 +17,10 @@
     </style>
 
 
-    <style name="Widget.MaterialComponents.Toolbar.Primary">
+    <style name="test" parent="Base.Theme.TomorrowHouseAppProject">
+        <item name="android:actionMenuTextColor">@color/black</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="colorSecondary">@color/black</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="titleTextColor">?attr/colorOnPrimary</item>
     </style>
