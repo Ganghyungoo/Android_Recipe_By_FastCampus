@@ -28,7 +28,9 @@ class HomeFragment: Fragment(R.layout.fragment_home) {
         fragmentHomeBinding = FragmentHomeBinding.inflate(layoutInflater)
         setUpWriteButton()
         homeArticleAdapter = HomeArticleAdapter {
-            //상세화면으로 전환
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToArticleFragment(
+                it.articleId.orEmpty()
+            ))
         }
 
         fragmentHomeBinding.homeRecyclerView.apply {
