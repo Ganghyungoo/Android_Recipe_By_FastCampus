@@ -6,4 +6,5 @@
     <string name="order">주문</string>
     <string name="toolbar_title_text">%s님,\n 오늘 커피한잔 어때요?</string>
     <string name="toolbar_star_count">%d/%d⭐</string>
+    <string name="recommend_title">%s님을 위한 추천 메뉴"</string>
 </resources>

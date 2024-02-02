@@ -1,103 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
     <ScrollView
-        android:nestedScrollingEnabled="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1000dp"/>
 
-            
+            <include
+                android:id="@+id/recommendMenuList"
+                layout="@layout/layout_horizontal_menu_list" />
+
+
         </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbarLayout"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:layout_height="wrap_content"
             app:contentScrim="@color/white"
-            android:layout_height="wrap_content">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="260dp">
 
                 <ImageView
-                    android:alpha="0.5"
                     android:id="@+id/toolBarImageView"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:scaleType="centerCrop"
                     android:layout_width="0dp"
                     android:layout_height="170dp"
-                    android:background="#00FFE8"/>
+                    android:alpha="0.5"
+                    android:background="#00FFE8"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/toolBarTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="50dp"
                     android:layout_marginStart="20dp"
-                    android:textSize="22sp"
+                    android:layout_marginTop="50dp"
+                    android:text="@string/toolbar_title_text"
                     android:textColor="@color/black"
+                    android:textSize="22sp"
                     android:textStyle="bold"
-                    android:text="@string/toolbar_title_text"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ProgressBar
                     android:id="@+id/progress_horizontal"
                     style="?android:attr/progressBarStyleHorizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginTop="15dp"
-                    app:layout_constraintEnd_toStartOf="@id/starCountTextView"
-                    app:layout_constraintTop_toBottomOf="@+id/toolBarImageView"
                     android:layout_width="0dp"
                     android:layout_height="8dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
                     android:max="12"
-                    android:progress="5"/>
+                    android:progress="5"
+                    app:layout_constraintEnd_toStartOf="@id/starCountTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolBarImageView" />
 
                 <TextView
                     android:id="@+id/starCountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
+                    android:text="@string/toolbar_star_count"
                     android:textSize="30sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/progress_horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/progress_horizontal"
                     app:layout_constraintBottom_toBottomOf="@+id/progress_horizontal"
-                    android:text="@string/toolbar_star_count"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/progress_horizontal"
+                    app:layout_constraintTop_toTopOf="@+id/progress_horizontal" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolBar"
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="bottom"
-                android:background="@color/white"
-                android:layout_height="50dp">
+                android:background="@color/white">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -107,27 +107,26 @@
                     <TextView
                         android:id="@+id/newsTextView"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="what news"
-                        android:drawablePadding="5dp"
-                        android:textSize="20sp"
                         android:drawableStart="@drawable/baseline_fiber_new_24"
-                        android:layout_height="wrap_content"/>
+                        android:drawablePadding="5dp"
+                        android:text="what news"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/couponTextView"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Coupon"
-                        android:drawablePadding="5dp"
-                        android:textSize="20sp"
                         android:layout_marginStart="20dp"
                         android:drawableStart="@drawable/baseline_discount_24"
-                        android:layout_height="wrap_content"/>
+                        android:drawablePadding="5dp"
+                        android:text="Coupon"
+                        android:textSize="20sp" />
 
 
                 </LinearLayout>
-
 
 
             </androidx.appcompat.widget.Toolbar>
