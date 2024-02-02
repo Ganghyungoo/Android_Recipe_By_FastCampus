@@ -41,6 +41,7 @@
                 android:layout_height="260dp">
 
                 <ImageView
+                    android:alpha="0.5"
                     android:id="@+id/toolBarImageView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +89,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/progress_horizontal"
                     app:layout_constraintBottom_toBottomOf="@+id/progress_horizontal"
-                    android:text="5/12⭐"/>
+                    android:text="@string/toolbar_star_count"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar
