@@ -7,6 +7,7 @@
     tools:context=".HomeFragment">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:nestedScrollingEnabled="true"
@@ -14,11 +15,21 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <include
                 android:id="@+id/recommendMenuList"
                 layout="@layout/layout_horizontal_menu_list" />
+
+            <include
+                android:id="@+id/bannerImageViewLayout"
+                layout="@layout/layout_banner_image"/>
+
+            <include
+                android:id="@+id/foodMenuList"
+                layout="@layout/layout_horizontal_menu_list" />
+
 
 
         </LinearLayout>
@@ -66,6 +77,7 @@
 
                 <ProgressBar
                     android:id="@+id/progress_horizontal"
+                    android:progressDrawable="@drawable/drawable_progress"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="0dp"
                     android:layout_height="8dp"
@@ -135,4 +147,15 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:text="@string/delivery"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:icon="@drawable/baseline_delivery_dining_24"
+        app:iconTint="@color/white"
+        android:textColor="@color/white"
+        android:backgroundTint="#0A9500"
+        android:layout_gravity="bottom|end"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
