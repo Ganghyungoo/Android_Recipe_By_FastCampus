@@ -7,6 +7,8 @@
     tools:context=".HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:nestedScrollingEnabled="true"
+        android:background="#DCDCDC"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/orderRecyclerView"
         android:layout_width="match_parent"
@@ -15,12 +17,46 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:background="@color/white">
 
         <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/orderMotionLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minHeight="?actionBarSize"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layoutDescription="@xml/fragment_order_toolbar_scene">
+
+            <View
+                android:id="@+id/toolBarDummyView"
+                android:layout_width="0dp"
+                android:layout_height="?actionBarSize"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            
+            <TextView
+                android:text="@string/order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="35sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/toolBarTitleTextView" />
+
+            <ImageView
+                android:id="@+id/toolBarImageView"
+                android:src="@drawable/baseline_search_24"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
 
 
     </com.google.android.material.appbar.AppBarLayout>
