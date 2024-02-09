@@ -19,7 +19,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(activityMainBinding.root)
 
-        videoAdapter = VideoAdapter(this)
+        videoAdapter = VideoAdapter(this){ videoItem ->
+            activityMainBinding.motionLayout.setTransition(R.id.collapse, R.id.expand)
+            activityMainBinding.motionLayout.transitionToEnd()
+        }
+        //우리가 설계할 떄 애초에 펼쳐진 상태를 기준으로 설계했으므로 닫힌상태로 설정한다.
+        activityMainBinding.motionLayout.jumpToState(R.id.collapse)
         activityMainBinding.videoListRecyclerView.apply {
             adapter = videoAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)

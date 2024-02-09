@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/motionLayout"
     app:layoutDescription="@xml/player_scene"
     tools:context=".MainActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/TODO">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -66,41 +67,41 @@
         app:layout_constraintTop_toTopOf="@+id/videoPlayerContainer" />
 
     <TextView
-        app:layout_constraintStart_toEndOf="@+id/playerView"
-        app:layout_constraintEnd_toStartOf="@+id/controlButton"
         android:id="@+id/videoTitleTextView"
-        android:maxLines="1"
-        android:textSize="14sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ellipsize="end"
-        app:layout_constraintTop_toTopOf="@+id/videoPlayerContainer"
+        android:maxLines="1"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/videoPlayerContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintEnd_toStartOf="@+id/controlButton"
+        app:layout_constraintStart_toEndOf="@+id/playerView"
+        app:layout_constraintTop_toTopOf="@+id/videoPlayerContainer" />
 
     <ImageView
         android:id="@+id/controlButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0"
-        tools:alpha="1"
         android:padding="10dp"
         android:src="@drawable/baseline_play_arrow_24"
         app:layout_constraintBottom_toBottomOf="@+id/videoPlayerContainer"
         app:layout_constraintEnd_toStartOf="@+id/hideButton"
-        app:layout_constraintTop_toTopOf="@+id/videoPlayerContainer" />
+        app:layout_constraintTop_toTopOf="@+id/videoPlayerContainer"
+        tools:alpha="1" />
 
     <ImageView
         android:id="@+id/hideButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0"
-        tools:alpha="1"
         android:padding="10dp"
         android:src="@drawable/baseline_clear_24"
         app:layout_constraintBottom_toBottomOf="@+id/videoPlayerContainer"
         app:layout_constraintEnd_toEndOf="@+id/videoPlayerContainer"
-        app:layout_constraintTop_toTopOf="@+id/videoPlayerContainer" />
+        app:layout_constraintTop_toTopOf="@+id/videoPlayerContainer"
+        tools:alpha="1" />
 
     <FrameLayout
         android:id="@+id/recyclerViewContainer"

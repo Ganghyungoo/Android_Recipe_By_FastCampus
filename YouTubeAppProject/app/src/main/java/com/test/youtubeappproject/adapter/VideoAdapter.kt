@@ -12,7 +12,7 @@ import com.test.youtubeappproject.R
 import com.test.youtubeappproject.databinding.ItemVideoBinding
 import com.test.youtubeappproject.dataclass.VideoItem
 
-class VideoAdapter(private val context:Context): ListAdapter<VideoItem, VideoAdapter.ViewHolder>(diffUtil) {
+class VideoAdapter(private val context:Context, private val onClick: (item:VideoItem) -> Unit): ListAdapter<VideoItem, VideoAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(private val itemVideoBinding: ItemVideoBinding) :
         RecyclerView.ViewHolder(itemVideoBinding.root) {
         fun binding(item: VideoItem) {
@@ -27,6 +27,10 @@ class VideoAdapter(private val context:Context): ListAdapter<VideoItem, VideoAda
                 .load(item.channelThumb)
                 .circleCrop()
                 .into(itemVideoBinding.channelLogoImageView)
+
+            itemVideoBinding.root.setOnClickListener {
+                onClick(item)
+            }
 
         }
     }
