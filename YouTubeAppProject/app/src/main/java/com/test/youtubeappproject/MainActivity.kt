@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         initMainRecyclerViewAdapterAndItemTouch()
         initInnerRecyclerViewAdapterAndItemTouch()
 
-
         //모션 레이아웃 초기 설정
         initMotionLayout()
 
@@ -56,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.playerRecyclerView.apply {
             adapter = playerVideoAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
+            itemAnimator = null
         }
     }
 
@@ -63,7 +63,9 @@ class MainActivity : AppCompatActivity() {
         playerVideoAdapter = PlayerVideoAdapter(this) { videoItem ->
             play(videoItem)
             val list = listOf<VideoItem>(videoItem) + videoList.videos.filter { it.id != videoItem.id }
-            playerVideoAdapter.submitList(list)
+            playerVideoAdapter.submitList(list){
+                activityMainBinding.playerRecyclerView.scrollToPosition(0)
+            }
         }
     }
 
@@ -129,7 +131,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun readDataAndSubmitList() {
-
         videoAdapter.submitList(videoList.videos)
     }
 
