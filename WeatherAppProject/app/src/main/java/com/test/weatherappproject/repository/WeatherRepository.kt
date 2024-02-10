@@ -1,5 +1,6 @@
 package com.test.weatherappproject.repository
 
+import android.content.Context
 import android.util.Log
 import com.test.weatherappproject.GeoPointConverter
 import com.test.weatherappproject.NetworkApi
@@ -21,6 +22,7 @@ object WeatherRepository {
         lon: Double,
         successCallback: (List<Forecast>) -> Unit,
         failCallback: (t: Throwable) -> Unit,
+        context: Context
     ) {
         //오늘의 날짜와 시간을 데이터 포펫에 맞게 얻어서 통신하기 위한 작업
         val baseDateTime = BaseDateTime()
@@ -33,7 +35,7 @@ object WeatherRepository {
         NetworkApi.getRetrofitService().getVillageForecast(
 
 //            serviceKey = R.string.weather_service_key.toString(),
-            serviceKey = "hojdaAj28uKSvkkT5O01VLlmsMbVDxwWfk5norTQMAdtVK6+18evQogPO5ix63vdVPoPG6hGVUGv2iZ3nKzJvA==",
+            serviceKey = context.getString(R.string.api_key),
             baseDate = baseDateTime.baseDate,
             baseTime = baseDateTime.baseTime,
             nx = point.nx,

@@ -25,11 +25,9 @@ class UpdateWeatherService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         //서비스를 실행하고 위젯을 업데이트하는 작업은 알림이 필수적이므로 알림을 띄우는 작업 시행
         createChannel()
         startForeground(1, createNotification())
-
         //위젯 매니저 가져오기
         val appWidgetManager: AppWidgetManager = AppWidgetManager.getInstance(this)
 
@@ -103,7 +101,8 @@ class UpdateWeatherService : Service() {
                     }
                     exception.printStackTrace()
                     stopSelf()
-                }
+                },
+                context = this
             )
         }
 

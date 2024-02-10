@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("netWorkFunction", "${list}")
             }, {
                 it.printStackTrace()
-            })
+            },this)
 
 
             Log.d("myLocation", "위도: ${it.latitude} 경도: ${it.longitude}")
