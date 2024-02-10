@@ -44,13 +44,13 @@
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao068233d2b9991bbee16b747d61a11f0e" />
+                    android:scheme="@string/kakaoAuthScheme" />
             </intent-filter>
         </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA9t0gJEL0nrtTWSqZkYxpDSVoY30bae88" />
+            android:value="@string/googleGeoApi" />
     </application>
 
 </manifest>
