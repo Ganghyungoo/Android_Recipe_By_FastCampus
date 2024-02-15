@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), FaceAnalyzerListener {
     }
 
     override fun detect() {
-        
+
     }
 
     override fun stopDetect() {
@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity(), FaceAnalyzerListener {
 
     override fun detectProgress(progress: Float, message: String) {
         setProgressText(message)
+        activityMainBinding.faceOverlayView.setProgress(progress)
     }
 
     override fun faceSize(rectF: RectF, sizeF: SizeF, pointF: PointF) {
