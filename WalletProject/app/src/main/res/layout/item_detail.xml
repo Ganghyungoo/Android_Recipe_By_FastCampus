@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.test.walletproject.model.DetailItem" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dataTextView"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            date="@{item.date}"
+            android:layout_height="wrap_content"
+            tools:text="2023.1.1"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:id="@+id/typeTextView"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            type="@{item.type}"
+            android:background="@drawable/rounded_corner"
+            tools:text="type"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/contentTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="0.35"
+            android:text="@{item.content}"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/amountTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="0.3"
+            android:gravity="end"
+            android:textStyle="bold"
+            tools:text="100원"
+            amount="@{item.amount}"/>
+
+    </LinearLayout>
+</layout>
