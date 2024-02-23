@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="view"
+            type="com.test.searchmediaproject.MainActivity" />
     </data>
 
     <LinearLayout
