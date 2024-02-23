@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.test.architecturepatternproject.mvc.MvcActivity" />
+        <activity android:name="com.test.architecturepatternproject.mvp.MvpActivity" />
     </application>
 
 </manifest>
