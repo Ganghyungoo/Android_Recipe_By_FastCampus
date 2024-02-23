@@ -3,7 +3,7 @@ package com.test.searchmediaproject.model
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-data class VideoResponse(
+data class VideoListResponse(
     val documents: List<VideoItem>
 )
 data class VideoItem(

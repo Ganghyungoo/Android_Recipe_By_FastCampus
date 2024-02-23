@@ -35,7 +35,7 @@ class ListAdapter : ListAdapter<ListItem, RecyclerView.ViewHolder>(diffUtil) {
         if (getItemViewType(position) == IMAGE){
             (holder as ImageViewHolder).bind(currentList[position])
         }else{
-            (holder as ImageViewHolder).bind(currentList[position])
+            (holder as VideoViewHolder).bind(currentList[position])
         }
     }
 

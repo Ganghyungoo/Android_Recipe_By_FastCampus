@@ -8,9 +8,6 @@
             name="item"
             type="com.test.searchmediaproject.model.ImageItem" />
 
-        <variable
-            name="handler"
-            type="fastcampus.part3.chapter5.list.ItemHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
