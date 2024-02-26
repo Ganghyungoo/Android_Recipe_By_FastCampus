@@ -12,9 +12,8 @@ import com.test.searchmediaproject.list.viewholder.VideoViewHolder
 import com.test.searchmediaproject.model.ImageItem
 import com.test.searchmediaproject.model.ListItem
 
-class ListAdapter : ListAdapter<ListItem, RecyclerView.ViewHolder>(diffUtil) {
+class ListAdapter(private val handler:ItemHandler? = null) : ListAdapter<ListItem, RecyclerView.ViewHolder>(diffUtil) {
 
-    //TODO 오류나면 아래 currentList 대신 getItem()사용
     override fun getItemViewType(position: Int): Int {
         return if (currentList[position] is ImageItem) {
             IMAGE
@@ -25,9 +24,9 @@ class ListAdapter : ListAdapter<ListItem, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == IMAGE) {
-            ImageViewHolder(ItemImageBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+            ImageViewHolder(ItemImageBinding.inflate(LayoutInflater.from(parent.context),parent,false),handler)
         } else {
-            VideoViewHolder(ItemVideoBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+            VideoViewHolder(ItemVideoBinding.inflate(LayoutInflater.from(parent.context),parent,false),handler)
         }
     }
 
