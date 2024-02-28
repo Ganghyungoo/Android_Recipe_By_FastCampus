@@ -31,20 +31,22 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
-    fun initView(){
+    fun initView() {
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
             view = this@MainActivity
             viewPager.adapter = adapter
 
-            TabLayoutMediator(tabLayout,viewPager){ tab: TabLayout.Tab, position: Int ->
-                tab.text = when(fragmentList[position]){
+            TabLayoutMediator(tabLayout, viewPager) { tab: TabLayout.Tab, position: Int ->
+                tab.text = when (fragmentList[position]) {
                     is SearchFragment -> {
                         "검색 결과"
                     }
+
                     is FavoriteFragment -> {
                         "즐겨 찾기"
                     }
+
                     else -> {
                         "알 수 없음"
                     }
@@ -56,33 +58,41 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)
 
-        observableTextQuery = Observable.create { emitter:ObservableEmitter<String>? ->
-            (menu.findItem(R.id.search).actionView as SearchView).apply {
-                setOnQueryTextListener(object: SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(p0: String): Boolean {
-                        emitter?.onNext(p0)
-                        return false
-                    }
+        val observeObj = Observable.create { emitter: ObservableEmitter<String>? ->
+            try {
+                (menu.findItem(R.id.search).actionView as SearchView).apply {
+                    setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(p0: String): Boolean {
+                            emitter?.onNext(p0)
+                            return false
+                        }
 
-                    override fun onQueryTextChange(p0: String): Boolean {
-                        activityMainBinding.viewPager.setCurrentItem(0,true)
-                        emitter?.onNext(p0)
-                        return false
-                    }
+                        override fun onQueryTextChange(p0: String): Boolean {
+                            activityMainBinding.viewPager.setCurrentItem(0, true)
+                            emitter?.onNext(p0)
+                            return false
+                        }
 
-                })
+                    })
+                }
+            } catch (e: Exception) {
+                emitter?.onError(e)
             }
+
         }
-            .debounce(500,TimeUnit.MILLISECONDS)
+        observableTextQuery = observeObj
+            .debounce(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                searchFragment.searchKeyword(it)
-            }
-
-
-
-
+            .subscribe(
+                {
+                    searchFragment.searchKeyword(it)
+                },
+                { error ->
+                    error.printStackTrace()
+                }, {
+                    //완료 되었을 때
+                })
         return true
     }
 
