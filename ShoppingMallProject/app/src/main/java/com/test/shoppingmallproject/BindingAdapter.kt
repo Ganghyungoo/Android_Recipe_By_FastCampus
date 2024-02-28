@@ -21,6 +21,6 @@ fun ImageView.setImage(imageUrl: String){
     }
 }
 @BindingAdapter("moneyText")
-fun TextView.MoneyText(money: Long){
+fun TextView.moneyText(money: Long){
     text = NumberFormat.getInstance(Locale.KOREA).format(money ?: 0) + "원"
 }

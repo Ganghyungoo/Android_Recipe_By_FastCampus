@@ -6,5 +6,5 @@ data class Coupon(
     val coupon: String,
 ) : ListItem {
     override val viewType: ViewType
-        get() = ViewType.IMAGE
+        get() = ViewType.COUPON
 }
