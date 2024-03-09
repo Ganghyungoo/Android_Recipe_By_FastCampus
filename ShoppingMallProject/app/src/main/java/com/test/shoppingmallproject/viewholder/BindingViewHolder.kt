@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.databinding.library.baseAdapters.BR
 import com.test.shoppingmallproject.model.ListItem
 
-abstract class BindingViewHolder<VB : ViewDataBinding>(private val binding: VB) :
+open class BindingViewHolder<VB : ViewDataBinding>(private val binding: VB) :
     RecyclerView.ViewHolder(binding.root) {
 
     protected var item: ListItem? = null

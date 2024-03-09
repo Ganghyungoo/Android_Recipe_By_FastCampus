@@ -28,12 +28,15 @@
                     android:paddingBottom="16dp"
                     app:layout_collapseMode="pin">
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/logoImageView"
                         android:layout_width="wrap_content"
-                        android:layout_height="24dp"
+                        android:layout_height="wrap_content"
+                        android:text=" 쿠팡"
+                        app:drawableStartCompat="@drawable/discount"
+                        android:textSize="30sp"
+                        android:textColor="@color/black"
                         android:layout_marginTop="16dp"
-                        android:adjustViewBounds="true"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
