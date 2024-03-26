@@ -9,10 +9,10 @@
     </item>
     <item android:id="@android:id/progress">
         <scale android:scaleWidth="100%">
-        <shape>
-            <solid android:color="#FFF300"/>
-            <corners android:radius="8dp"/>
-        </shape>
+            <shape>
+                <solid android:color="#FFF300"/>
+                <corners android:radius="8dp"/>
+            </shape>
         </scale>
     </item>
 </layer-list>
